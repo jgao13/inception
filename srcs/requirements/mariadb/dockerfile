@@ -1,0 +1,15 @@
+FROM	debian:buster
+
+RUN		apt-get update && apt-get upgrade -y && apt-get -qq install mariadb-server mariadb-client -y
+
+RUN		mkdir -p /var/run/mysqld && chown -R mysql:mysql /var/run/mysqld
+
+COPY	/tools/config_sql.sh .
+
+RUN		chmod 755 config_sql.sh
+
+ENTRYPOINT [ "./config_sql.sh" ]
+
+CMD ["mysqld", "--bind-address=0.0.0.0"]
+
+EXPOSE	3306
