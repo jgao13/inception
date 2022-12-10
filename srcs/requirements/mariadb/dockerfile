@@ -1,15 +1,24 @@
-FROM	debian:buster
+FROM alpine:3.12.7
 
-RUN		apt-get update && apt-get upgrade -y && apt-get -qq install mariadb-server mariadb-client -y
+ARG MYSQL_DATABASE=wordpress
+ARG MYSQL_USER=jgao
+ARG MYSQL_PASSWORD=password
+ARG MYSQL_ROOT_PASSWORD=root_password
 
-RUN		mkdir -p /var/run/mysqld && chown -R mysql:mysql /var/run/mysqld
+RUN apk update && apk add mariadb mariadb-client
 
-COPY	/tools/config_sql.sh .
+RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal
 
-RUN		chmod 755 config_sql.sh
+RUN mkdir -p /run/mysqld && chown -R mysql /run/mysqld
 
-ENTRYPOINT [ "./config_sql.sh" ]
+RUN sed -i "s|.*skip-networking.*|skip-networking = false|g" /etc/my.cnf.d/mariadb-server.cnf && sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
 
-CMD ["mysqld", "--bind-address=0.0.0.0"]
+RUN mysqld -umysql &\
+    sleep 5 && \ 
+    echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" | mysql &&\
+    echo "CREATE USER IF NOT EXISTS'${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" | mysql &&\
+    echo "GRANT ALL PRIVILEGES ON wordpress.* TO '${MYSQL_USER}'@'%'; FLUSH PRIVILEGES;" | mysql &&\
+    echo "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${MYSQL_ROOT_PASSWORD}');" | mysql
+CMD ["mysqld", "--user=mysql"]
 
-EXPOSE	3306
+EXPOSE 3306
