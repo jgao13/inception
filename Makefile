@@ -46,7 +46,7 @@ ${NAME}:
 	mkdir -p ${DIR_MYSQL}
 	mkdir -p ${DIR_WORDPRESS}
 	@echo "${LIGHTPURPLE}${BOLD}Doing docker compose things${RESET}"
-	sudo docker-compose -f ${DC_LOCATION} ${ENV} up --build
+	sudo docker-compose -f ${DC_LOCATION} ${ENV} up --build -d
 
 
 clean:
