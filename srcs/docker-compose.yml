@@ -43,7 +43,7 @@ services:
     build: 
       context: requirements/wordpress
     restart: always
-    env_file: .env
+    # env_file: .env
     volumes:
       - wordpress:/var/www/html
     environment: 
