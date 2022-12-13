@@ -70,13 +70,13 @@ networks:
 
 volumes:
   wordpress:
-    driver: local
+    # driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
       device: '/home/jgao/data/wordpress' #a changer
   mariadb:
-    driver: local
+    # driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
