@@ -50,7 +50,7 @@ ${NAME}:
 
 
 clean:
-	sudo docker-compose -f ${DC_LOCATION} -${ENV} down -v
+	sudo docker-compose -f ${DC_LOCATION} ${ENV} down -v
 	sudo rm -rf ${DIR_MYSQL}
 	sudo rm -rf ${DIR_WORDPRESS}
 
