@@ -4,11 +4,12 @@ NAME	=	inception
 
 DC_LOCATION		= srcs/docker-compose.yml
 
-DIR_MYSQL		= /home/user42/data/mysql
-DIR_WORDPRESS	= /home/user42/data/wordpress
+DIR_MYSQL		= /home/jgao/data/mysql
+DIR_WORDPRESS	= /home/jgao/data/wordpress
 
 #COMPILATOR AND FLAG
 MAKEFLAGS	+=	--no-print-directory
+ENV			= --env-file srcs/.env
 
 #COMMAND
 RM		= rm -f
@@ -45,11 +46,11 @@ ${NAME}:
 	mkdir -p ${DIR_MYSQL}
 	mkdir -p ${DIR_WORDPRESS}
 	@echo "${LIGHTPURPLE}${BOLD}Doing docker compose things${RESET}"
-	docker-compose -f ${DC_LOCATION} up --build
+	docker-compose -f ${DC_LOCATION} ${ENV} up --build
 
 
 clean:
-	docker-compose -f ${DC_LOCATION} down -v
+	docker-compose -f ${DC_LOCATION} -${ENV} down -v
 	sudo rm -rf ${DIR_MYSQL}
 	sudo rm -rf ${DIR_WORDPRESS}
 

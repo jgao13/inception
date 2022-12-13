@@ -5,8 +5,8 @@ then
 	echo "already installed"
 else
 	sleep 10
-	mkdir -p /var/www/wordpress
-	chmod -R 755 /var/www/wordpress
+	mkdir -p /var/www/html
+	chmod -R 755 /var/www/html
 	wp core download --path=/var/www/html/ --allow-root
 
 	echo "config creating"
