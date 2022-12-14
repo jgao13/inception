@@ -74,10 +74,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/jgao/data/wordpress' #a changer
+      device: '/home/jgao/data/wordpress'
   mariadb:
     # driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/jgao/data/mysql' #a changer
+      device: '/home/jgao/data/mysql'

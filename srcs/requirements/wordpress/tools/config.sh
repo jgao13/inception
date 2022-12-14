@@ -18,7 +18,7 @@ else
 						--path='/var/www/html'
 
 	echo "created"
-	wp core install --url=jgao.42.fr --title=Inception --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --allow-root --path='/var/www/html'
+	wp core install --url=jgao.42.fr --title=Inception --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --allow-root --path='/var/www/html'
 	wp user create $WP_USER $WP_USER_MAIL --user_pass=$WP_PASSWORD --role="author" --path="/var/www/html" --allow-root
 
 	touch /var/www/wordpress/.installed
