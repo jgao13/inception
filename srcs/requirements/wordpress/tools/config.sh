@@ -10,6 +10,7 @@ else
 	wp core download --path=/var/www/html/ --allow-root
 
 	echo "config creating"
+	echo "$MYSQL_USER"
 	wp config create	--allow-root \
 						--dbname=$MYSQL_DATABASE \
 						--dbuser=$MYSQL_USER \
@@ -19,7 +20,9 @@ else
 
 	echo "created"
 	wp core install --url=jgao.42.fr --title=Inception --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_MAIL --allow-root --path='/var/www/html'
+	echo "wp core install done"
 	wp user create $WP_USER $WP_USER_MAIL --user_pass=$WP_PASSWORD --role="author" --path="/var/www/html" --allow-root
+	echo "wp user created"
 
 	touch /var/www/wordpress/.installed
 fi

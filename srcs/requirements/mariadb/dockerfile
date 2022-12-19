@@ -16,10 +16,10 @@ RUN sed -i "s|.*skip-networking.*|skip-networking = false|g" /etc/my.cnf.d/maria
 RUN mysqld -umysql & \
     sleep 10 && \ 
     echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" | mysql && \
-    echo "CREATE USER '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';FLUSH PRIVILEGES;" | mysql && \
-    echo "GRANT ALL PRIVILEGES ON wordpress.* TO '${MYSQL_USER}'@'localhost'; FLUSH PRIVILEGES;" | mysql && \
-    echo "SET PASSWORD FOR '${MYSQL_USER}'@'localhost' = PASSWORD('${MYSQL_PASSWORD}');" | mysql && \
-    echo "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${MYSQL_ROOT_PASSWORD}');" | mysql
+    echo "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; FLUSH PRIVILEGES;" | mysql && \
+    echo "GRANT ALL PRIVILEGES ON wordpress.* TO '${MYSQL_USER}'@'%'; FLUSH PRIVILEGES;" | mysql && \
+    echo "SET PASSWORD FOR '${MYSQL_USER}'@'%' = PASSWORD('${MYSQL_PASSWORD}'); FLUSH PRIVILEGES;" | mysql && \
+    echo "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${MYSQL_ROOT_PASSWORD}'); FLUSH PRIVILEGES;" | mysql
 
 
 CMD ["mysqld", "--user=mysql"]
